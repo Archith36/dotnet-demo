@@ -54,10 +54,11 @@ stages:
       displayName: Deploy to Test
       condition: and(succeeded(), not(startsWith(variables['Build.SourceBranch'], 'refs/pull/')))
       environment: 'Test'
-      variables:
-        deploymentFile: 'deployment-test.yml'
-      steps:
-        - script: kubectl apply -f $(deploymentFile) -n test
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+              - script: kubectl apply -f deployment-test.yml -n test
 
 - stage: DeployProd
   displayName: Deploy to Prod
@@ -67,7 +68,8 @@ stages:
       displayName: Deploy to Prod
       condition: and(succeeded(), not(startsWith(variables['Build.SourceBranch'], 'refs/pull/')))
       environment: 'Production'
-      variables:
-        deploymentFile: 'deployment-prod.yml'
-      steps:
-        - script: kubectl apply -f $(deploymentFile) -n prod
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+              - script: kubectl apply -f deployment-prod.yml -n prod
