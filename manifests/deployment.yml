@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: archithdotnetdemo 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: archithdotnetdemo
+  template:
+    metadata:
+      labels:
+        app: archithdotnetdemo 
+    spec:
+      containers:
+        - name: archithdotnetdemo 
+          image: archithacr.azurecr.io/archithdotnetdemo
+          ports:
+          - containerPort: 80
