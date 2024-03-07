@@ -1,0 +1,20 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: image
+  namespace: prod  
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: image
+  template:
+    metadata:
+      labels:
+        app: image 
+    spec:
+      containers:
+        - name: image 
+          image: archithacr.azurecr.io/dockerimage
+          ports:
+          - containerPort: 80
