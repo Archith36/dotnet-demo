@@ -44,16 +44,16 @@ stages:
     - upload: manifests
       artifact: manifests
 
-- stage: Deploy_test
+- stage: test
   displayName: Deploy stage test
   dependsOn: Build
 
   jobs:
-  - deployment: Deploy_test
+  - deployment: test
     displayName: Deploy stage test
     pool:
       vmImage: $(vmImageName)
-    environment: 'Archith36dotnetdemo-6063.test'
+    environment: 'test'
     strategy:
       runOnce:
         deploy:
@@ -76,16 +76,16 @@ stages:
                 $(imagePullSecret)
               containers: |
                 $(containerRegistry)/$(imageRepository):$(tag)
-- stage: Deploy_prod
+- stage: prod
   displayName: Deploy to prod
   dependsOn: Build
 
   jobs:
-  - deployment: Deploy_prod
+  - deployment: prod
     displayName: Deploy to prod
     pool:
       vmImage: $(vmImageName)
-    environment: 'Archith36dotnetdemo-6063.prod'
+    environment: 'prod'
     strategy:
       runOnce:
         deploy:
